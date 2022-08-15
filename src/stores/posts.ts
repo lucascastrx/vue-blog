@@ -20,8 +20,9 @@ export const usePosts = defineStore('posts',{
     setSelectedPeriod (period: Period) {
       this.selectedPeriod = period
      },
+
      async fetchPosts(){
-      const res = await window.fetch("http://localhost:8000/posts")
+      const res = await window.fetch("/api/posts")
       const data = (await res.json()) as Post[]
 
       let ids: string[] = []
@@ -34,7 +35,20 @@ export const usePosts = defineStore('posts',{
       
       this.ids = ids
       this.all = all
-     }
+     },
+
+      createPost (post: TimelinePost) {
+        const body = JSON.stringify({...post, created: post.created.toISO() })
+        console.log(body);
+        
+        return window.fetch("/api/posts", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body
+        }) 
+      }
   },
 
   getters: {

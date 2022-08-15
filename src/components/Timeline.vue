@@ -26,3 +26,6 @@ await postsStore.fetchPosts()
   </nav>
 </template>
 
+<style scoped>
+
+</style>
